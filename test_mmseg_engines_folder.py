@@ -7,7 +7,7 @@ import tensorrt as trt
 import matplotlib.pyplot as plt
 
 # Define the number of images to process
-N = 6  # or any other value you want to set dynamically
+N = 40  # or any other value you want to set dynamically
 
 PATH_TO_MMSEG = os.environ["PATH_TO_MMSEG"]
 image_dir = PATH_TO_MMSEG + f"/demo/batch{N}/"  # Directory containing batch of images
@@ -70,7 +70,7 @@ def run_tensorrt_inference(images):
     TRT_LOGGER = trt.Logger(trt.Logger.VERBOSE)
 
     def load_plugins():
-        plugin_library = "/home/lemon/anomaly/mmdeploy/build/lib/libmmdeploy_tensorrt_ops.so"
+        plugin_library = "/root/openmmlab/mmdeploy/build/lib/libmmdeploy_tensorrt_ops.so"
         if not os.path.exists(plugin_library):
             raise RuntimeError(f"Plugin library not found at: {plugin_library}")
         ctypes.CDLL(plugin_library)
@@ -84,7 +84,7 @@ def run_tensorrt_inference(images):
     
     load_plugins()
     runtime = trt.Runtime(TRT_LOGGER)
-    engine = load_engine(runtime, '/home/lemon/anomaly/work_dir_cityscapes_batch6/end2end.engine')
+    engine = load_engine(runtime, '/root/openmmlab/work_dir_cityscapes_batch40/end2end.engine')
     if engine is None:
         raise RuntimeError("Failed to load the engine. Ensure the engine and plugins are correctly configured.")
 
